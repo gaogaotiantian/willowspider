@@ -1,0 +1,21 @@
+name: cronjob
+
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: '0,15,30,45 * * * *'
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependency
+        run: pip install -r requirements.txt
+      - name: Crawl
+        run: python willowspider.py
